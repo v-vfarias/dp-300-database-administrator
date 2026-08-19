@@ -32,14 +32,11 @@ You run this exercise against your own environment rather than a prebuilt sandbo
 
 ## Provision the lab environment
 
-This section isn't required, but it's recommended if you need a quick way to provision the lab environment.
+This section **isn't required**, but it's recommended if you need a quick way to provision the lab environment.
 
 If you don't already have the Oracle source, PostgreSQL flexible server, and Microsoft Foundry deployment, a community **Deploy to Azure** template can stand up the whole environment for you. If you're bringing your own environment, skip this section — just confirm it meets the prerequisites above.
 
-<a href="https://github.com/Balunywa/azure-oracle-pg-migrator" style="display:inline-block; padding:10px 16px; background-color:#0063B1; color:#FFFFFF; text-decoration:none; border-radius:4px; font-weight:600;">Deploy the environment here</a>
-
-> [!NOTE]
-> This template is a community-maintained, third-party resource — not an official Microsoft asset — offered as an interim option pending official publication. Review it before deploying. It creates billable Azure resources, so use its teardown option to remove them when you finish.
+<a href="https://github.com/MicrosoftLearning/mslearn-postgresql/tree/main/Allfiles/Deploy" style="display:inline-block; padding:10px 16px; background-color:#0063B1; color:#FFFFFF; text-decoration:none; border-radius:4px; font-weight:600;">Deploy the environment here</a>
 
 ## Create the migration project
 
