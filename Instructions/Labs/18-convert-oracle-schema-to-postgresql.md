@@ -6,7 +6,7 @@ lab:
     duration: 30  # duration in minutes
     level: 300 # 100 basic concepts, 200 foundations, 300 practical usage, 400 advanced scenarios, 500 expert design
     islab: true # if this is not a lab that should be listed in the catalog, set to false
-    status: 'in-development' # in-development or released
+    status: 'released' # in-development or released
     targetDate: '2099-01-01' # Set to the future date when you expect an in-development lab to be released
 ---
 
@@ -18,15 +18,25 @@ In this exercise, you run an end-to-end schema conversion from Oracle to Azure D
 
 You run this exercise against your own environment rather than a prebuilt sandbox, because the tool reads schema metadata directly from a live Oracle data dictionary and validates the converted objects against a real Azure Database for PostgreSQL flexible server.
 
+
 > [!NOTE]
 > This exercise runs against a live environment. Before you start, confirm that you have:
 >
 > - The **PostgreSQL** extension for Visual Studio Code installed and signed in.
 > - A source Oracle database you can reach, with a migration user that holds `SELECT_CATALOG_ROLE` and read access to `SYS.ARGUMENT$`.
 > - An Azure Database for PostgreSQL flexible server to use as the scratch database, with the extensions your schema needs allowlisted and installed.
-> - A Microsoft Foundry deployment of `gpt-5.2` with enough tokens-per-minute (TPM) capacity for your schema.
+> - A Microsoft Foundry deployment of a currently supported chat model with enough tokens-per-minute (TPM) capacity for your schema.
+> - The **Cognitive Services OpenAI User** role on that Foundry resource for the identity you sign in with, so Microsoft Entra ID authentication succeeds.
 >
 > If any of these pieces are missing, set them up before you begin.
+
+## Provision the lab environment
+
+This section **isn't required**, but it's recommended if you need a quick way to provision the lab environment.
+
+If you don't already have the Oracle source, PostgreSQL flexible server, and Microsoft Foundry deployment, a community **Deploy to Azure** template can stand up the whole environment for you. If you're bringing your own environment, skip this section — just confirm it meets the prerequisites above.
+
+<a href="https://github.com/MicrosoftLearning/mslearn-postgresql/tree/main/Allfiles/Deploy" style="display:inline-block; padding:10px 16px; background-color:#0063B1; color:#FFFFFF; text-decoration:none; border-radius:4px; font-weight:600;">Deploy the environment here</a>
 
 ## Create the migration project
 
@@ -36,8 +46,11 @@ The Migration Wizard collects everything the conversion needs across four steps:
 1. On **Project Setup**, enter a project name, then select **Next**.
 1. On **Connect to Oracle**, enter your Oracle host, port, and service name, along with the migration user credentials. Select **Load Schemas**, choose the schema you want to convert, then select **Next**.
 1. On the scratch database step, select your Azure Database for PostgreSQL connection and target database, select **Verify Extensions**, then select **Next**.
-1. On the Microsoft Foundry step, enter your endpoint and the deployment name for `gpt-5.2`, and select **Microsoft Entra ID** for authentication.
+1. On the Microsoft Foundry step, enter your endpoint and your chat model deployment name, and select **Microsoft Entra ID** for authentication.
 1. Select **Test Connection**. After the check succeeds, select **Create Migration Project**.
+
+> [!NOTE]
+> If **Verify Extensions** reports missing extensions, allow-list them through the `azure.extensions` server parameter on your flexible server, then retry the step.
 
 The tool selects thin or thick client mode automatically based on your Oracle network configuration, so the connection succeeds without extra steps unless native network encryption requires the Oracle Instant Client.
 
